@@ -42,11 +42,11 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Sign In
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/auth">Sign In</Link>
             </Button>
-            <Button size="sm" className="gradient-primary text-primary-foreground shadow-glow hover:opacity-90 transition-opacity">
-              Get Started
+            <Button size="sm" className="gradient-primary text-primary-foreground shadow-glow hover:opacity-90 transition-opacity" asChild>
+              <Link to="/request-report">Get Started</Link>
             </Button>
           </div>
 
@@ -74,11 +74,11 @@ const Header = () => {
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border/50">
-                <Button variant="ghost" size="sm">
-                  Sign In
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/auth">Sign In</Link>
                 </Button>
-                <Button size="sm" className="gradient-primary text-primary-foreground">
-                  Get Started
+                <Button size="sm" className="gradient-primary text-primary-foreground" asChild>
+                  <Link to="/request-report">Get Started</Link>
                 </Button>
               </div>
             </nav>
