@@ -1,17 +1,30 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const navLinks = [
-    { label: "Solutions", href: "#solutions" },
-    { label: "How It Works", href: "#process" },
-    { label: "Partners", href: "#partners" },
-    { label: "Impact", href: "#impact" },
+    { label: "Solutions", hash: "solutions" },
+    { label: "How It Works", hash: "process" },
+    { label: "Partners", hash: "partners" },
+    { label: "Impact", hash: "impact" },
   ];
+
+  const handleNavClick = (hash: string) => {
+    setIsMenuOpen(false);
+
+    if (location.pathname !== "/") {
+      navigate(`/#${hash}`);
+    } else {
+      const element = document.getElementById(hash);
+      element?.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
@@ -30,13 +43,13 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <button
                 key={link.label}
-                href={link.href}
+                onClick={() => handleNavClick(link.hash)}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.label}
-              </a>
+              </button>
             ))}
           </nav>
 
@@ -45,7 +58,11 @@ const Header = () => {
             <Button variant="ghost" size="sm" asChild>
               <Link to="/auth">Sign In</Link>
             </Button>
-            <Button size="sm" className="gradient-primary text-primary-foreground shadow-glow hover:opacity-90 transition-opacity" asChild>
+            <Button
+              size="sm"
+              className="gradient-primary text-primary-foreground shadow-glow hover:opacity-90 transition-opacity"
+              asChild
+            >
               <Link to="/request-report">Get Started</Link>
             </Button>
           </div>
@@ -64,21 +81,29 @@ const Header = () => {
           <div className="lg:hidden py-4 border-t border-border/50 animate-fade-in">
             <nav className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <button
                   key={link.label}
-                  href={link.href}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => handleNavClick(link.hash)}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2 text-left"
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
+
               <div className="flex flex-col gap-2 pt-4 border-t border-border/50">
                 <Button variant="ghost" size="sm" asChild>
-                  <Link to="/auth">Sign In</Link>
+                  <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
+                    Sign In
+                  </Link>
                 </Button>
-                <Button size="sm" className="gradient-primary text-primary-foreground" asChild>
-                  <Link to="/request-report">Get Started</Link>
+                <Button
+                  size="sm"
+                  className="gradient-primary text-primary-foreground"
+                  asChild
+                >
+                  <Link to="/request-report" onClick={() => setIsMenuOpen(false)}>
+                    Get Started
+                  </Link>
                 </Button>
               </div>
             </nav>
