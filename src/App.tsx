@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+
+import Layout from "@/components/layout/Layout";
+
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
@@ -23,15 +26,17 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/contractors" element={<Contractors />} />
-            <Route path="/request-report" element={<RequestReport />} />
-            <Route path="/sample-report" element={<SampleReport />} />
-            <Route path="/report/:id" element={<Report />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
+            {/* Public layout */}
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/request-report" element={<RequestReport />} />
+              <Route path="/sample-report" element={<SampleReport />} />
+              <Route path="/contractors" element={<Contractors />} />
+              <Route path="/report/:id" element={<Report />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
@@ -40,4 +45,3 @@ const App = () => (
 );
 
 export default App;
-
